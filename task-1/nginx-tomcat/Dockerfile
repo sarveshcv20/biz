@@ -16,7 +16,7 @@ RUN curl -O https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.40/bin/apache-t
 #Copying server.xml (tomcat port is changed to 8500)
 ADD server.xml /opt/tomcat/conf/ 
 
-# Copying nginx config (added reverse proxy config )
+# Copying nginx config (added reverse proxy config with access & err logging enabled )
 ADD nginx.conf /etc/nginx/ 
 
 # Copying supervisor config
