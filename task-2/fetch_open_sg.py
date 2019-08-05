@@ -33,6 +33,7 @@ def send_email(email_body,recipients,subject):
   email.quit()
 
 # Program starts here
+# Finding exposed sg's
 for security_group in security_groups:
     security_ip_permissions = security_group['IpPermissions']
     security_group_name = security_group['GroupName']
@@ -43,7 +44,7 @@ for security_group in security_groups:
                 if item['CidrIp'] == '0.0.0.0/0':
                     open_sgs['SG'][security_group_name] = security_group_id
 
-
+# Converting dict into list
 for key,value in open_sgs['SG'].iteritems():
     tmp = '%s : %s' %(key,value)
     grp_data.append(tmp)
