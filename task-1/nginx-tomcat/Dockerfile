@@ -1,13 +1,14 @@
-#Using customised base-image which contains required dependencies (dockerfile available under base-image folder)
+# Using customised base-image which contains required dependencies (dockerfile available under base-image folder)
+# Pulls customised base-image from dockerhub
 FROM sarveshanand94/sarvesh-repo:sarvesh-final-base
 
 # Creating tomcat dir
 RUN mkdir /opt/tomcat/
 
-# Making current dir
+# Making current work dir
 WORKDIR /opt/tomcat
 
-#Downloading tomcat tar, extracting contents and installing Nginx
+#Downloading tomcat tar, extracting contents and installing Nginx from nginx repo
 RUN curl -O https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.40/bin/apache-tomcat-8.5.40.tar.gz \
     && tar xvfz apache*.tar.gz \
     && mv apache-tomcat-8.5.40/* /opt/tomcat/. \
@@ -19,7 +20,7 @@ ADD server.xml /opt/tomcat/conf/
 # Copying nginx config (added reverse proxy config with access & err logging enabled )
 ADD nginx.conf /etc/nginx/ 
 
-# Copying supervisor config
+# Copying supervisor config (contains startup commands for processes)
 ADD supervisor.conf /etc/supervisor.conf
 
 # Exposing nginx port 80 to connect from host
@@ -27,3 +28,6 @@ EXPOSE 80
 
 # Command to run at boot up of container (supervisor controls multi-process startup)
 CMD ["supervisord", "-c", "/etc/supervisor.conf"]
+
+# Docker build command : docker build -t imagename
+# Docker run command :  docker container run -it -d --name container_name -p 80:80 container_image_id
