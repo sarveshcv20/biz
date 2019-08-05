@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 # Variables to be supplied
-# 1.Region 2.Mail credentials for smtp client
+# 1. .boto file is assumed to be in place 2.Region 3.Mail credentials for smtp client
 
 # Importing python modules
 import boto3
@@ -48,6 +48,7 @@ for key,value in open_sgs['SG'].iteritems():
     tmp = '%s : %s' %(key,value)
     grp_data.append(tmp)
 
-print grp_data
-msg = "Below Security groups are found to be exposed to outside world\n\n%s" % ("\n".join(grp_data))
-send_email(msg, recipients,"EXPOSED SECURITY GROUPS IN REGION %s" %(region))
+if len(grp_data) > 0:
+    print grp_data
+    msg = "Below Security groups are found to be exposed to outside world\n\n%s" % ("\n".join(grp_data))
+    send_email(msg, recipients,"EXPOSED SECURITY GROUPS IN REGION %s" %(region))
