@@ -48,6 +48,7 @@ for key,value in open_sgs['SG'].iteritems():
     tmp = '%s : %s' %(key,value)
     grp_data.append(tmp)
 
-print grp_data
-msg = "Below Security groups are found to be exposed to outside world\n\n%s" % ("\n".join(grp_data))
-send_email(msg, recipients,"EXPOSED SECURITY GROUPS IN REGION %s" %(region))
+if len(grp_data) > 0:
+    print grp_data
+    msg = "Below Security groups are found to be exposed to outside world\n\n%s" % ("\n".join(grp_data))
+    send_email(msg, recipients,"EXPOSED SECURITY GROUPS IN REGION %s" %(region))
