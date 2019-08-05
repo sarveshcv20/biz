@@ -1,0 +1,42 @@
+#Assumptions:
+#1.Pub key of ansible server is copied to servers (ansible-user)
+#2.Add [servers] hosts under /etc/ansible/hosts
+#3.ansible-user is having sudo prvlgs
+#4.Playbook is executed as ansible-user
+
+# For task timing
+#added below config etc/ansible/ansible.cfg to get task timing post playbook execution
+#[defaults]
+#callback_whitelist = profile_tasks
+
+- name: Execute tasks
+  hosts: servers
+  become_user: root
+  tasks:
+  - name: install troubleshooting utilities
+    yum: pkg={{item}} state=present
+    with_items:
+        - htop
+        - iotop
+        - iftop
+        - ncdu
+    become: yes
+  - name: copy local script to remote hosts
+    copy:
+         src: /home/ansible-user/execute-ver.sh
+         dest: /home/ansible-user/execute-ver.sh
+  - name: Execute the script
+    command: sh /home/ansible-user/execute-ver.sh
+    register: output
+    when: ansible_distribution == 'CentOS'
+  - name: Copy contents of variable to file
+    copy:
+         content: "{{output.stdout_lines}}"
+         dest: /home/ansible-user/output.txt
+    when: ansible_distribution == 'CentOS'
+  - name: Fetch file from remote host
+    fetch:
+      src: /home/ansible-user/output.txt
+      dest: /home/ansible-user/output.txt
+      flat: yes
+    when: ansible_distribution == 'CentOS'
