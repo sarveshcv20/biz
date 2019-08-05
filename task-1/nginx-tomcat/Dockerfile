@@ -1,4 +1,4 @@
-#Using customised base-image which contains required dependencies
+#Using customised base-image which contains required dependencies (dockerfile available under base-image folder)
 FROM sarveshanand94/sarvesh-repo:sarvesh-final-base
 
 # Creating tomcat dir
