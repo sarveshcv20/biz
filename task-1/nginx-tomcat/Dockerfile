@@ -29,5 +29,7 @@ EXPOSE 80
 # Command to run at boot up of container (supervisor controls multi-process startup)
 CMD ["supervisord", "-c", "/etc/supervisor.conf"]
 
-# Docker build command : docker build -t imagename
-# Docker run command :  docker container run -it -d --name container_name -p 80:80 container_image_id
+# Docker build command 
+# docker build -t image_name .
+# Docker run command boots the container and binds container port with host port
+# docker run -it -d --name container_name -p 80:80 container_image_id
