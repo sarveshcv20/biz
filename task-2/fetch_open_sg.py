@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 # Variables to be supplied
-# 1. .boto file is assumed to be in place 2.Region 3.Mail credentials for smtp client
+# 1. .boto file is assumed to be in place or pass cred explicitly 2.Region 3.Mail credentials for smtp client
 
 # Importing python modules
 import boto3
