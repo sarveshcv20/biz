@@ -33,3 +33,4 @@ CMD ["supervisord", "-c", "/etc/supervisor.conf"]
 # docker build -t image_name .
 # Docker run command boots the container and binds container port with host port
 # docker run -it -d --name container_name -p 80:80 container_image_id
+# Connect at 127.0.0.1:80
